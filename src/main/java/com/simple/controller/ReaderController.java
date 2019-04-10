@@ -2,11 +2,8 @@ package com.simple.controller;
 
 import com.simple.entity.Reader;
 import com.simple.mapper.ReaderRepository;
-import com.simple.util.ExcelUtil;
-import org.apache.http.HttpResponse;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -14,25 +11,51 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Create By Simple4H
  * Date: 2019-04-08 14:51
  */
 @RestController
-@RequestMapping(value = "/excel/")
+@RequestMapping(value = "/reader/")
 public class ReaderController {
 
-    @Autowired
-    private ReaderRepository readerRepository;
+    private final ReaderRepository readerRepository;
+
+    public ReaderController(ReaderRepository readerRepository) {
+        this.readerRepository = readerRepository;
+    }
+
+
+    @RequestMapping("get_list")
+    public Object getList(){
+        List<Reader> lists = (List<Reader>) readerRepository.findAll();
+        Map<Integer,Reader> map = lists.stream().collect(Collectors.toMap(Reader::getId, Function.identity()));
+        return  map.get(1);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     @RequestMapping(value = "download")
     public Object getExcel() throws IOException {
         ServletRequestAttributes servletRequestAttributes = (ServletRequestAttributes) RequestContextHolder.getRequestAttributes();
+        assert servletRequestAttributes != null;
         HttpServletResponse response = servletRequestAttributes.getResponse();
         HSSFWorkbook workbook = new HSSFWorkbook();
         HSSFSheet sheet = workbook.createSheet("统计表");
@@ -61,6 +84,7 @@ public class ReaderController {
         }
 
         //生成excel文件
+        assert response != null;
         response.setContentType("application/octet-stream");
         response.setHeader("Content-disposition", "attachment;filename=student.xlsx");
 
