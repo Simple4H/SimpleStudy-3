@@ -1,7 +1,7 @@
 package com.simple.controller;
 
-import com.simple.entity.Reader;
-import com.simple.mapper.ReaderRepository;
+import com.simple.dao.ReaderMapper;
+import com.simple.pojo.Reader;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,31 +25,22 @@ import java.util.stream.Collectors;
 @RequestMapping(value = "/reader/")
 public class ReaderController {
 
-    private final ReaderRepository readerRepository;
+    private final ReaderMapper readerMapper;
 
-    public ReaderController(ReaderRepository readerRepository) {
-        this.readerRepository = readerRepository;
+    public ReaderController(ReaderMapper readerMapper) {
+        this.readerMapper = readerMapper;
     }
-
 
     @RequestMapping("get_list")
-    public Object getList(){
-        List<Reader> lists = (List<Reader>) readerRepository.findAll();
-        Map<Integer,Reader> map = lists.stream().collect(Collectors.toMap(Reader::getId, Function.identity()));
-        return  map.get(1);
+    public Object getList() {
+        List<Reader> lists = readerMapper.getAllReader();
+        Map<Integer, Reader> map = lists.stream().collect(Collectors.toMap(Reader::getId, Function.identity()));
+        List<Reader> objects = lists.stream().filter(s -> s.getId() == 1).collect(Collectors.toList());
+        List<Integer> ids = lists.stream().map(Reader::getId).collect(Collectors.toList());
+        List<String> userNames = lists.stream().map(Reader::getUsername).collect(Collectors.toList());
+        List<String> ids2 = lists.stream().filter(s -> s.getId() != 1).map(Reader::getUsername).collect(Collectors.toList());
+        return ids2;
     }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     @RequestMapping(value = "download")
@@ -61,7 +52,7 @@ public class ReaderController {
         HSSFSheet sheet = workbook.createSheet("统计表");
         createTitle(workbook, sheet);
 
-        List<Reader> lists = (List<Reader>) readerRepository.findAll();
+        List<Reader> lists = (List<Reader>) readerMapper.getAllReader();
 
         //设置日期格式
         HSSFCellStyle style = workbook.createCellStyle();

@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.simple.dao.BookMapper">
+  <resultMap id="BaseResultMap" type="com.simple.pojo.Book">
+    <!--@mbg.generated-->
+    <id column="bid" jdbcType="INTEGER" property="bid" />
+    <result column="bisbn" jdbcType="INTEGER" property="bisbn" />
+    <result column="bname" jdbcType="VARCHAR" property="bname" />
+    <result column="bwriter" jdbcType="VARCHAR" property="bwriter" />
+    <result column="bnumber" jdbcType="INTEGER" property="bnumber" />
+    <result column="boutnumber" jdbcType="INTEGER" property="boutnumber" />
+    <result column="bsort" jdbcType="VARCHAR" property="bsort" />
+    <result column="bpub" jdbcType="VARCHAR" property="bpub" />
+    <result column="bprice" jdbcType="DECIMAL" property="bprice" />
+    <result column="bintro" jdbcType="VARCHAR" property="bintro" />
+    <result column="bpic" jdbcType="VARCHAR" property="bpic" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    bid, bisbn, bname, bwriter, bnumber, boutnumber, bsort, bpub, bprice, bintro, bpic
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select 
+    <include refid="Base_Column_List" />
+    from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    <!--@mbg.generated-->
+    delete from book
+    where bid = #{bid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" keyColumn="bid" keyProperty="bid" parameterType="com.simple.pojo.Book" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into book (bisbn, bname, bwriter, 
+      bnumber, boutnumber, bsort, 
+      bpub, bprice, bintro, 
+      bpic)
+    values (#{bisbn,jdbcType=INTEGER}, #{bname,jdbcType=VARCHAR}, #{bwriter,jdbcType=VARCHAR}, 
+      #{bnumber,jdbcType=INTEGER}, #{boutnumber,jdbcType=INTEGER}, #{bsort,jdbcType=VARCHAR}, 
+      #{bpub,jdbcType=VARCHAR}, #{bprice,jdbcType=DECIMAL}, #{bintro,jdbcType=VARCHAR}, 
+      #{bpic,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" keyColumn="bid" keyProperty="bid" parameterType="com.simple.pojo.Book" useGeneratedKeys="true">
+    <!--@mbg.generated-->
+    insert into book
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="bisbn != null">
+        bisbn,
+      </if>
+      <if test="bname != null">
+        bname,
+      </if>
+      <if test="bwriter != null">
+        bwriter,
+      </if>
+      <if test="bnumber != null">
+        bnumber,
+      </if>
+      <if test="boutnumber != null">
+        boutnumber,
+      </if>
+      <if test="bsort != null">
+        bsort,
+      </if>
+      <if test="bpub != null">
+        bpub,
+      </if>
+      <if test="bprice != null">
+        bprice,
+      </if>
+      <if test="bintro != null">
+        bintro,
+      </if>
+      <if test="bpic != null">
+        bpic,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="bisbn != null">
+        #{bisbn,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null">
+        #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bwriter != null">
+        #{bwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="bnumber != null">
+        #{bnumber,jdbcType=INTEGER},
+      </if>
+      <if test="boutnumber != null">
+        #{boutnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bsort != null">
+        #{bsort,jdbcType=VARCHAR},
+      </if>
+      <if test="bpub != null">
+        #{bpub,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        #{bprice,jdbcType=DECIMAL},
+      </if>
+      <if test="bintro != null">
+        #{bintro,jdbcType=VARCHAR},
+      </if>
+      <if test="bpic != null">
+        #{bpic,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.simple.pojo.Book">
+    <!--@mbg.generated-->
+    update book
+    <set>
+      <if test="bisbn != null">
+        bisbn = #{bisbn,jdbcType=INTEGER},
+      </if>
+      <if test="bname != null">
+        bname = #{bname,jdbcType=VARCHAR},
+      </if>
+      <if test="bwriter != null">
+        bwriter = #{bwriter,jdbcType=VARCHAR},
+      </if>
+      <if test="bnumber != null">
+        bnumber = #{bnumber,jdbcType=INTEGER},
+      </if>
+      <if test="boutnumber != null">
+        boutnumber = #{boutnumber,jdbcType=INTEGER},
+      </if>
+      <if test="bsort != null">
+        bsort = #{bsort,jdbcType=VARCHAR},
+      </if>
+      <if test="bpub != null">
+        bpub = #{bpub,jdbcType=VARCHAR},
+      </if>
+      <if test="bprice != null">
+        bprice = #{bprice,jdbcType=DECIMAL},
+      </if>
+      <if test="bintro != null">
+        bintro = #{bintro,jdbcType=VARCHAR},
+      </if>
+      <if test="bpic != null">
+        bpic = #{bpic,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.simple.pojo.Book">
+    <!--@mbg.generated-->
+    update book
+    set bisbn = #{bisbn,jdbcType=INTEGER},
+      bname = #{bname,jdbcType=VARCHAR},
+      bwriter = #{bwriter,jdbcType=VARCHAR},
+      bnumber = #{bnumber,jdbcType=INTEGER},
+      boutnumber = #{boutnumber,jdbcType=INTEGER},
+      bsort = #{bsort,jdbcType=VARCHAR},
+      bpub = #{bpub,jdbcType=VARCHAR},
+      bprice = #{bprice,jdbcType=DECIMAL},
+      bintro = #{bintro,jdbcType=VARCHAR},
+      bpic = #{bpic,jdbcType=VARCHAR}
+    where bid = #{bid,jdbcType=INTEGER}
+  </update>
+</mapper>
