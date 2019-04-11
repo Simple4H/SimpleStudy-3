@@ -2,6 +2,7 @@ package com.simple.controller;
 
 import com.simple.dao.ReaderMapper;
 import com.simple.pojo.Reader;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.*;
 import org.apache.poi.ss.usermodel.HorizontalAlignment;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,7 @@ import java.util.stream.Collectors;
  * Date: 2019-04-08 14:51
  */
 @RestController
-@RequestMapping(value = "/reader/")
+@Slf4j
 public class ReaderController {
 
     private final ReaderMapper readerMapper;
@@ -31,7 +32,7 @@ public class ReaderController {
         this.readerMapper = readerMapper;
     }
 
-    @RequestMapping("get_list")
+    @RequestMapping("/a")
     public Object getList() {
         List<Reader> lists = readerMapper.getAllReader();
         Map<Integer, Reader> map = lists.stream().collect(Collectors.toMap(Reader::getId, Function.identity()));
@@ -39,6 +40,7 @@ public class ReaderController {
         List<Integer> ids = lists.stream().map(Reader::getId).collect(Collectors.toList());
         List<String> userNames = lists.stream().map(Reader::getUsername).collect(Collectors.toList());
         List<String> ids2 = lists.stream().filter(s -> s.getId() != 1).map(Reader::getUsername).collect(Collectors.toList());
+        log.error("ids2:{}", ids2);
         return ids2;
     }
 
