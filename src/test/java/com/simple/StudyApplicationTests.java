@@ -80,6 +80,13 @@ public class StudyApplicationTests {
 
     }
 
+    @Test
+    public void test4() {
+        Float a = 3.5F;
+
+        log.error("result is :{}",Math.round(a));
+    }
+
 
     private static String lists2String(List<Integer> list) {
         StringBuilder sb = new StringBuilder("(");
